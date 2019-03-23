@@ -32,6 +32,7 @@ docker ps
 # http://YourPiIPAddressHere:8888
 #docker stack rm tick-stack
 #rm -Rf /opt/chronograf /opt/influxdb /opt/kapacitor /opt/telegraf
+#docker system prune -af
 ###############################################################################
 
 
