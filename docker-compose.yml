@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 services:
 
@@ -6,9 +6,11 @@ services:
   telegraf:
     image: arm32v7/telegraf:1.10.0
     hostname: telegraf
-      environment:
-        - HOST_PROC=/host/proc
-        - INFLUX_URL="http://influxdb:8086"
+    environment:
+      - HOST_ETC=/host/etc
+      - HOST_PROC=/host/proc
+      - HOST_SYS=/host/sys
+      - INFLUX_URL=http://influxdb:8086
     ports:
       # Telegraf unencrypted UDP 8092
       - mode: host
@@ -32,8 +34,16 @@ services:
         source: /opt/telegraf/etc/telegraf
         target: /etc/telegraf
       - type: bind
+        source: /etc
+        target: /host/etc
+        read_only: true
+      - type: bind
         source: /proc
         target: /host/proc
+        read_only: true
+      - type: bind
+        source: /sys
+        target: /host/sys
         read_only: true
       - type: bind
         source: /var/run/docker.sock
@@ -48,8 +58,8 @@ services:
   influxdb:
     image: arm32v7/influxdb:1.7.4
     hostname: influxdb
-      environment:
-        - INFLUXDB_GRAPHITE_ENABLED=true
+    environment:
+      - INFLUXDB_GRAPHITE_ENABLED=true
     ports:
       # InfluxDB Graphite unencrypted TCP 2003
       - mode: host
@@ -80,8 +90,8 @@ services:
   chronograf:
     image: arm32v7/chronograf:1.7.8
     hostname: chronograf
-      environment:
-        - influxdb-url=http://influxdb:8086
+    environment:
+      - influxdb-url=http://influxdb:8086
     ports:
       # Chronograf unencrypted TCP 8888
       - mode: host
@@ -113,6 +123,9 @@ services:
     networks:
       - tick-stack-net1
     volumes:
+      - type: bind
+        source: /opt/kapacitor/etc/kapacitor
+        target: /etc/kapacitor      
       - type: bind
         source: /opt/kapacitor/var/lib/kapacitor
         target: /var/lib/kapacitor
