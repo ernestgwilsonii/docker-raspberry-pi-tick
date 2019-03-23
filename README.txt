@@ -4,6 +4,18 @@
 #      REF: https://www.influxdata.com/time-series-platform/ #
 #############################################################
 
+
+###############################################################################
+# Quick
+sudo -u root mkdir -p /opt/docker-compose
+cd /opt/docker-compose
+git clone https://github.com/ernestgwilsonii/docker-raspberry-pi-tick.git
+cd docker-raspberry-pi-tick
+sudo -u root ./lazy.sh
+sudo -u root docker stack deploy -c docker-compose.yml tick-stack
+###############################################################################
+
+
 ###############################################################################
 # Docker Images
 sudo bash
