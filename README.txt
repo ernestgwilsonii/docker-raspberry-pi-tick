@@ -6,6 +6,18 @@
 
 
 ###############################################################################
+# Prerequisites
+###############
+ssh pi@YourPiIPAddressHere
+sudo -u root bash
+apt-get update && apt-get dist-upgrade -y
+curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
+pip install --upgrade docker-compose
+docker swarm init
+###############################################################################
+
+
+###############################################################################
 # Quick (if using Docker Swarm and bind mounted data in /opt)
 sudo -u root bash
 mkdir -p /opt/docker-compose
