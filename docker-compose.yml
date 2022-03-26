@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
 
@@ -31,7 +31,7 @@ services:
       - tick-stack-net1
     volumes:
       - type: bind
-        source: /opt/telegraf/etc/telegraf
+        source: /opt/docker/telegraf/etc/telegraf
         target: /etc/telegraf
       - type: bind
         source: /etc
@@ -75,10 +75,10 @@ services:
       - tick-stack-net1
     volumes:
       - type: bind
-        source: /opt/influxdb/etc/influxdb
+        source: /opt/docker/influxdb/etc/influxdb
         target: /etc/influxdb
       - type: bind
-        source: /opt/influxdb/var/lib/influxdb
+        source: /opt/docker/influxdb/var/lib/influxdb
         target: /var/lib/influxdb
     deploy:
       labels:
@@ -102,7 +102,7 @@ services:
       - tick-stack-net1
     volumes:
       - type: bind
-        source: /opt/chronograf/var/lib/chronograf
+        source: /opt/docker/chronograf/var/lib/chronograf
         target: /var/lib/chronograf
     deploy:
       labels:
@@ -124,10 +124,10 @@ services:
       - tick-stack-net1
     volumes:
       - type: bind
-        source: /opt/kapacitor/etc/kapacitor
+        source: /opt/docker/kapacitor/etc/kapacitor
         target: /etc/kapacitor      
       - type: bind
-        source: /opt/kapacitor/var/lib/kapacitor
+        source: /opt/docker/kapacitor/var/lib/kapacitor
         target: /var/lib/kapacitor
     deploy:
       labels:

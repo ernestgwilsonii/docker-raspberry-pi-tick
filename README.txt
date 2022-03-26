@@ -24,20 +24,20 @@ docker swarm init
 
 
 ###############################################################################
-# Quick (if using Docker Swarm and bind mounted data in /opt)
+# Quick (if using Docker Swarm and bind mounted data in /opt/docker)
 sudo -u root bash
 mkdir -p /opt/docker-compose
 cd /opt/docker-compose
 git clone https://github.com/ernestgwilsonii/docker-raspberry-pi-tick.git
 cd docker-raspberry-pi-tick
-./lazy.sh
+sudo ./lazy.sh
 docker stack deploy -c docker-compose.yml tick-stack
 docker stack ls
 docker service ls
 docker ps
 # http://YourPiIPAddressHere:8888
 #docker stack rm tick-stack
-#rm -Rf /opt/chronograf /opt/influxdb /opt/kapacitor /opt/telegraf
+#rm -Rf /opt/docker/chronograf /opt/docker/influxdb /opt/docker/kapacitor /opt/docker/telegraf
 #docker system prune -af
 ###############################################################################
 
@@ -53,8 +53,8 @@ docker images
 
 # Generate new config files (optional)
 #docker run --rm -p 8092:8092/udp -p 8094:8094/tcp -p 8125:8125/tcp arm32v7/telegraf:1.22.0 telegraf config > telegraf.conf
-#docker run --rm -v /opt/influxdb/etc/influxdb:/etc/influxdb -v /opt/influxdb/var/lib/influxdb:/var/lib/influxdb -p 2003:2003/tcp -p 8094:8094/tcp -p 8125:8125/tcp arm32v7/influxdb:1.8.10 influxd config > influxdb.conf
-#docker run --rm -v /opt/kapacitor/var/lib/kapacitor:/var/lib/kapacitor -p 9092:9092 arm32v7/kapacitor:1.9.4 kapacitord config > kapacitor.conf
+#docker run --rm -v /opt/docker/influxdb/etc/influxdb:/etc/influxdb -v /opt/docker/influxdb/var/lib/influxdb:/var/lib/influxdb -p 2003:2003/tcp -p 8094:8094/tcp -p 8125:8125/tcp arm32v7/influxdb:1.8.10 influxd config > influxdb.conf
+#docker run --rm -v /opt/docker/kapacitor/var/lib/kapacitor:/var/lib/kapacitor -p 9092:9092 arm32v7/kapacitor:1.9.4 kapacitord config > kapacitor.conf
 
 # Verify (no persistence, start each container manually for testing and then shutdown and remove)
 docker network create influxdb
@@ -77,26 +77,26 @@ docker network rm influxdb
 # Create bind mounted directories
 
 # Telegraf - https://hub.docker.com/r/arm32v7/telegraf
-sudo mkdir -p /opt/telegraf/etc/telegraf
-cp -n telegraf.conf /opt/telegraf/etc/telegraf/telegraf.conf
-chmod -R a+rw /opt/telegraf
+sudo mkdir -p /opt/docker/telegraf/etc/telegraf
+cp -n telegraf.conf /opt/docker/telegraf/etc/telegraf/telegraf.conf
+chmod -R a+rw /opt/docker/telegraf
 
 # InfluxDB - https://hub.docker.com/r/arm32v7/influxdb
-sudo mkdir -p /opt/influxdb/etc/influxdb
-cp -n influxdb.conf /opt/influxdb/etc/influxdb/influxdb.conf
-sudo mkdir -p /opt/influxdb/var/lib/influxdb/meta
-sudo mkdir -p /opt/influxdb/var/lib/influxdb/data
-chmod -R a+rw /opt/influxdb
+sudo mkdir -p /opt/docker/influxdb/etc/influxdb
+cp -n influxdb.conf /opt/docker/influxdb/etc/influxdb/influxdb.conf
+sudo mkdir -p /opt/docker/influxdb/var/lib/influxdb/meta
+sudo mkdir -p /opt/docker/influxdb/var/lib/influxdb/data
+chmod -R a+rw /opt/docker/influxdb
 
 # Chronograf - https://hub.docker.com/r/arm32v7/chronograf
-sudo mkdir -p /opt/chronograf/var/lib/chronograf
-chmod -R a+rw /opt/chronograf
+sudo mkdir -p /opt/docker/chronograf/var/lib/chronograf
+chmod -R a+rw /opt/docker/chronograf
 
 # Kapacitor - https://hub.docker.com/r/arm32v7/kapacitor
-sudo mkdir -p /opt/kapacitor/etc/kapacitor
-cp -n kapacitor.conf /opt/kapacitor/etc/kapacitor/kapacitor.conf
-sudo mkdir -p /opt/kapacitor/var/lib/kapacitor
-chmod -R a+rw /opt/kapacitor
+sudo mkdir -p /opt/docker/kapacitor/etc/kapacitor
+cp -n kapacitor.conf /opt/docker/kapacitor/etc/kapacitor/kapacitor.conf
+sudo mkdir -p /opt/docker/kapacitor/var/lib/kapacitor
+chmod -R a+rw /opt/docker/kapacitor
 ###############################################################################
 
 
