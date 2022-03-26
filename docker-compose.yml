@@ -4,7 +4,7 @@ services:
 
   # REF: https://hub.docker.com/r/arm32v7/telegraf
   telegraf:
-    image: arm32v7/telegraf:1.10.0
+    image: arm32v7/telegraf:1.22.0
     hostname: telegraf
     environment:
       - HOST_ETC=/host/etc
@@ -56,7 +56,7 @@ services:
 
   # REF: https://hub.docker.com/r/arm32v7/influxdb
   influxdb:
-    image: arm32v7/influxdb:1.7.4
+    image: arm32v7/influxdb:1.8.10
     hostname: influxdb
     environment:
       - INFLUXDB_GRAPHITE_ENABLED=true
@@ -88,7 +88,7 @@ services:
 
   # REF: https://hub.docker.com/r/arm32v7/chronograf
   chronograf:
-    image: arm32v7/chronograf:1.7.8
+    image: arm32v7/chronograf:1.9.4
     hostname: chronograf
     environment:
       - influxdb-url=http://influxdb:8086
@@ -112,7 +112,7 @@ services:
 
   # REF: https://hub.docker.com/r/arm32v7/kapacitor
   kapacitor:
-    image: arm32v7/kapacitor:1.5.2
+    image: arm32v7/kapacitor:1.5.9
     hostname: kapacitor
     ports:
       # Kapacitor unencrypted TCP 9092
