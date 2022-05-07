@@ -9,9 +9,18 @@ influx
 show databases
 
 create database db_solar_data
-
 use db_solar_data
-
 select * from solar_data
-
+select * from solar_data LIMIT 1 OFFSET 0
 select a,k,sfi from solar_data
+select a,k,sfi from solar_data LIMIT 5 OFFSET 0
+
+create database db_map
+use db_map
+select  * from pota_data
+select  * from pota_data LIMIT 2 OFFSET 0
+
+SELECT * FROM "db_map".."pota_data"
+# REF: https://docs.influxdata.com/influxdb/v1.8/query_language/explore-data/
+
+SELECT * FROM "db_map"."autogen"."pota_data"

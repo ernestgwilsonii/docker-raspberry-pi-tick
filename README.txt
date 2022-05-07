@@ -97,6 +97,8 @@ sudo mkdir -p /opt/docker/kapacitor/etc/kapacitor
 cp -n kapacitor.conf /opt/docker/kapacitor/etc/kapacitor/kapacitor.conf
 sudo mkdir -p /opt/docker/kapacitor/var/lib/kapacitor
 chmod -R a+rw /opt/docker/kapacitor
+
+chown -R pi:docker /opt/docker
 ###############################################################################
 
 
